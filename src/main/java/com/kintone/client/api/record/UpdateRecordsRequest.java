@@ -14,4 +14,7 @@ public class UpdateRecordsRequest implements KintoneRequest {
 
     /** A list of objects that include id/updateKey, revision and record objects (required). */
     private List<RecordForUpdate> records;
+
+    /** A mode where adding and updating records can be processed at the same time (optional). */
+    private Boolean upsert;
 }

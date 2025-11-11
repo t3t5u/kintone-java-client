@@ -519,9 +519,24 @@ public class RecordClient {
      * @return a list of record revisions. See {@link RecordRevision}
      */
     public List<RecordRevision> updateRecords(long app, List<RecordForUpdate> records) {
+        return updateRecords(app, records, false);
+    }
+
+    /**
+     * Updates details of multiple records in an App, by specifying their record numbers, or their
+     * unique keys.
+     *
+     * @param app the App ID
+     * @param records a list of objects that include id/updateKey, revision and record objects
+     * @param upsert a mode where adding and updating records can be processed at the same time
+     * @return a list of record revisions. See {@link RecordRevision}
+     */
+    public List<RecordRevision> updateRecords(
+            long app, List<RecordForUpdate> records, boolean upsert) {
         UpdateRecordsRequest req = new UpdateRecordsRequest();
         req.setApp(app);
         req.setRecords(records);
+        req.setUpsert(upsert);
         return updateRecords(req).getRecords();
     }
 

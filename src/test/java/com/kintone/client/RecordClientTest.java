@@ -525,15 +525,16 @@ public class RecordClientTest {
     public void updateRecords_long_List() {
         RecordForUpdate up1 = new RecordForUpdate(1L, new Record());
         RecordForUpdate up2 = new RecordForUpdate(new UpdateKey("text", "test"), new Record());
-        RecordRevision rev1 = new RecordRevision(1, 2);
-        RecordRevision rev2 = new RecordRevision(100, 2);
+        RecordRevision rev1 = new RecordRevision(1, 2, null);
+        RecordRevision rev2 = new RecordRevision(100, 2, null);
         mockClient.setResponseBody(new UpdateRecordsResponseBody(Arrays.asList(rev1, rev2)));
 
         List<RecordForUpdate> records = Arrays.asList(up1, up2);
         assertThat(sut.updateRecords(1, records)).containsExactly(rev1, rev2);
         assertThat(mockClient.getLastApi()).isEqualTo(KintoneApi.UPDATE_RECORDS);
         assertThat(mockClient.getLastBody()).isInstanceOf(UpdateRecordsRequest.class);
-        UpdateRecordsRequest expected = new UpdateRecordsRequest().setApp(1L).setRecords(records);
+        UpdateRecordsRequest expected =
+                new UpdateRecordsRequest().setApp(1L).setRecords(records).setUpsert(false);
         assertThat(mockClient.getLastBody()).usingRecursiveComparison().isEqualTo(expected);
     }
 

@@ -14,4 +14,7 @@ public class RecordRevision {
 
     /** The revision number of the record after updating the record. */
     private final long revision;
+
+    /** The operation processed on the record. */
+    private final String operation;
 }
